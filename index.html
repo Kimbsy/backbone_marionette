@@ -3,7 +3,6 @@
   <head>
     <meta charset="utf-8">
     <title>Marionette Contact Manager</title>
-    <!-- Le styles -->
     <link href="./assets/css/bootstrap.css" rel="stylesheet">
     <link href="./assets/css/application.css" rel="stylesheet">
   </head>
@@ -18,13 +17,18 @@
       </div>
     </div>
 
-    <div class="container">
+    <div id="main-region" class="container">
       <p>Here is the static content of the web page. You'll notice that it gets replaced by our app as soon as we start it up.</p>
     </div>
 
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/template" id="static-template">
+      <p>This is the text that was rendered by our Marionette app.</p>
+    </script>
+
+    <script type="text/template" id="different-static-template">
+      <p>Text from a different template...<p>
+    </script>
+
     <script src="./assets/js/vendor/jquery.js"></script>
     <script src="./assets/js/vendor/json2.js"></script>
     <script src="./assets/js/vendor/underscore.js"></script>
@@ -34,8 +38,22 @@
     <script type="text/javascript">
       var ContactManager = new Marionette.Application();
 
-      ContactManager.on("initialize:after", function() {
-        console.log("Contact manager has started!");
+      ContactManager.addRegions({
+        mainRegion: "#main-region",
+      });
+
+      ContactManager.StaticView = Marionette.ItemView.extend({
+        id: "static-view",
+        tagName: "span",
+        className: "instruction",
+        template: "#static-template",
+      });
+
+      ContactManager.on("start", function() {
+        var staticView = new ContactManager.StaticView({
+          template: "#different-static-template",
+        });
+        ContactManager.mainRegion.show(staticView);
       });
 
       ContactManager.start();
