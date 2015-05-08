@@ -12,7 +12,9 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
-          <span class="brand">Contact Manager</span>
+          <div id="nav-region" class="container">
+            <span class="brand">This shit will go</span>  
+          </div>
         </div>
       </div>
     </div>
@@ -25,73 +27,24 @@
       <%- firstName %> <%- lastName %>
     </script>
 
+    <script type="text/template" id="nav-link">
+      <%- title %>
+    </script>
+
     <script src="./assets/js/vendor/jquery.js"></script>
     <script src="./assets/js/vendor/json2.js"></script>
     <script src="./assets/js/vendor/underscore.js"></script>
     <script src="./assets/js/vendor/backbone.js"></script>
     <script src="./assets/js/vendor/backbone.marionette.js"></script>
 
+    <!-- custom js -->
+    <script src="./assets/js/app.js"></script>
+    <script src="./assets/js/entities/contact.js"></script>
+    <script src="./assets/js/entities/navLink.js"></script>
+    <script src="./assets/js/apps/contacts/list/list_view.js"></script>
+    <script src="./assets/js/apps/contacts/list/list_controller.js"></script>
+
     <script type="text/javascript">
-      var ContactManager = new Marionette.Application();
-
-      ContactManager.addRegions({
-        mainRegion: "#main-region",
-      });
-
-      // define model for single contact
-      ContactManager.Contact = Backbone.Model.extend({
-        defaults: {
-          firstName: "",
-          phoneNumber: "No phone number!"
-        }
-      });
-
-      // define view for single contact 
-      ContactManager.ContactItemView = Marionette.ItemView.extend({
-        tagName: "li",
-        template: "#contact-list-item"
-      });
-
-      // define view for collection of contacts
-      ContactManager.ContactsView = Marionette.CollectionView.extend({
-        tagName: "ul",
-        childView: ContactManager.ContactItemView
-      });
-
-      // define a collection
-      ContactManager.ContactCollection = Backbone.Collection.extend({
-        model: ContactManager.Contact
-      });
-
-      ContactManager.on("start", function() {
-        // create collection of contacts
-        var contacts = new ContactManager.ContactCollection([
-          {
-            firstName: "Bob",
-            lastName: "Brigham",
-            phoneNumber: "555-0163"
-          },
-          {
-            firstName: "Alice",
-            lastName: "Arten",
-            phoneNumber: "555-0184"
-          },
-          {
-            firstName: "Charlie",
-            lastName: "Campbell",
-            phoneNumber: "555-0129"
-          }
-        ]);
-
-        // instantiate view for displaying collection
-        var contactsListView = new ContactManager.ContactsView({
-          collection: contacts
-        });
-
-        // display the collection
-        ContactManager.mainRegion.show(contactsListView);
-      });
-
       ContactManager.start();
     </script>
 
