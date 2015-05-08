@@ -12,4 +12,5 @@ ContactManager.on("start", function() {
 
   // display the contacts
   ContactManager.ContactsApp.List.Controller.listContacts();
+  
 });
